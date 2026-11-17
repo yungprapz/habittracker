@@ -261,6 +261,11 @@ h1.greeting{font-size:clamp(28px,7vw,36px);margin:2px 0 14px}
 .timeline .next:before{background:var(--butter);box-shadow:0 0 0 3px var(--butter-soft)}
 .group-settings{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,136px);gap:10px;margin:0 0 6px}
 .group-settings input{min-width:0;width:100%;box-sizing:border-box}
+.group-settings .field{min-width:0}
+/* iOS (before WebKit 292441) replaces width:100% on time inputs with its own pixel width and content-box sizing,
+   which pushed the routine time past the card. appearance:none makes it keep the sizing above. */
+.time-field input{-webkit-appearance:none;appearance:none;display:block;line-height:24px;text-align:left}
+.time-field input::-webkit-date-and-time-value{margin:0;text-align:left}
 .routine-group .cardhead{margin-bottom:12px}
 .habit-editor summary{min-height:56px}
 .chev{font-size:22px;color:var(--muted);transition:transform .2s}
