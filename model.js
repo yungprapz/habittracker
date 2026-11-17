@@ -1,11 +1,18 @@
 export const localDate=(d=new Date())=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 export const shift=(s,n)=>{const d=new Date(s+'T12:00:00');d.setDate(d.getDate()+n);return localDate(d)};
-export function initial(today=localDate()){return {versions:[{date:today,habits:['Thyroid medicine','Vitamin C serum','Moisturizer','Sunscreen','Red light mask','Serum','Moisturizer','Retinol','Hair oiling','Vitamin D','Iron','Creatine'].map((name,i)=>({id:String(i),name,period:i<4?'morning':'night',group:i>8?'Supplements':'Care',days:i===7?[1,4]:[0,1,2,3,4,5,6]}))}],checks:{},times:{morning:'07:00',night:'22:00'},anchors:{morning:'',night:''},auto:{}}}
+export function initial(today=localDate()){return {versions:[{date:today,habits:['Thyroid medicine','Vitamin C serum','Moisturizer','Sunscreen','Red light mask','Serum','Moisturizer','Retinol','Hair oiling','Vitamin D','Iron','Creatine'].map((name,i)=>({id:String(i),name,period:i<4?'morning':'night',group:i>8?'Supplements':'Care',days:i===7?[1,4]:[0,1,2,3,4,5,6],...(i===7?{perWeek:2}:{})}))}],checks:{},times:{morning:'07:00',night:'22:00'},anchors:{morning:'',night:''},auto:{}}}
 // Fill in fields added after the first release so older saves and backups keep working.
 export function upgrade(s){s.times??={morning:'07:00',night:'22:00'};s.anchors??={morning:'',night:''};s.auto??={};return s}
-export function scheduled(state,date){const v=state.versions.filter(v=>v.date<=date).at(-1);return (v?.habits||[]).filter(h=>h.days.includes(new Date(date+'T12:00:00').getDay()))}
+export function scheduled(state,date){const v=state.versions.filter(v=>v.date<=date).at(-1);return (v?.habits||[]).filter(h=>h.perWeek||h.days.includes(new Date(date+'T12:00:00').getDay()))}
 // Habits on "light tracking" have become automatic: still checkable, but they no longer count toward daily totals or flowers.
-export const active=(state,date)=>scheduled(state,date).filter(h=>!h.light);
+// Weekly habits ("any 2 days a week") are offered every day but measured by the week, so they never count as a missed day.
+export const active=(state,date)=>scheduled(state,date).filter(h=>!h.light&&!h.perWeek);
+export const weekly=(state,date)=>scheduled(state,date).filter(h=>h.perWeek&&!h.light);
+// Weeks run Monday to Sunday.
+export const weekStart=date=>shift(date,-((new Date(date+'T12:00:00').getDay()+6)%7));
+export function weekCount(s,id,date=localDate()){const start=weekStart(date);let n=0;for(let i=0;i<7;i++){const d=shift(start,i);if(d<=date&&s.checks[d]?.includes(id))n++}return n}
+// Consecutive weeks the weekly goal was met, counting this week only once it is met.
+export function weeksMet(s,id,target,date=localDate()){let d=weekStart(date),n=0;const full=w=>weekCount(s,id,shift(w,6))>=target;if(!(weekCount(s,id,date)>=target))d=shift(d,-7);while(d>=weekStart(s.versions[0].date)&&full(d)){n++;d=shift(d,-7)}return n}
 export function revise(s,habits,today=localDate()){s.versions=s.versions.filter(v=>v.date!==today);s.versions.push({date:today,habits:structuredClone(habits)});s.versions.sort((a,b)=>a.date.localeCompare(b.date))}
 
 /* Never miss twice. One missed day pauses a streak (it isn't counted, but the streak survives);
