@@ -1,0 +1,40 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Bloom//Habit reminders//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:bloom-morning-0700@yungprapz.github.io
+DTSTAMP:20261117T193456Z
+DTSTART:20261117T070000
+DTEND:20261117T071000
+RRULE:FREQ=DAILY
+SUMMARY:Bloom: Morning routine
+DESCRIPTION:Time for your morning habits. Open Bloom: https://yungprapz.git
+ hub.io/habittracker/
+URL:https://yungprapz.github.io/habittracker/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Morning routine
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:bloom-night-2200@yungprapz.github.io
+DTSTAMP:20261117T193456Z
+DTSTART:20261117T220000
+DTEND:20261117T221000
+RRULE:FREQ=DAILY
+SUMMARY:Bloom: Evening routine
+DESCRIPTION:Time for your evening habits. Open Bloom: https://yungprapz.git
+ hub.io/habittracker/
+URL:https://yungprapz.github.io/habittracker/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Evening routine
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+END:VCALENDAR
