@@ -23,7 +23,7 @@ Hair goal: 42 then 66 streak days under a "never miss twice" rule (one rest day 
 - garden-ui.js: bouquet, collection and scratch UI
 - reminders.js: calendar (.ics) reminders; sets globalThis.bloomReminders so sw.js can importScripts it
 - bloom-reminders.ics: default-times calendar file generated from reminders.js
-- sw.js: offline shell (network-first, skipWaiting) and the custom-time reminders route; bump cache on asset changes
+- sw.js: offline shell and the custom-time reminders route; bump cache on asset changes. Network-first with cache:'no-cache' (revalidates despite GitHub Pages' 10-minute max-age) and refreshes the offline copy of shell files; install fetches with cache:'reload' and calls skipWaiting; app.js registers it with updateViaCache:'none'
 
 ## Known limitations / next work
 The implemented SVG flowers are simpler than the approved visual mockups. Custom reward categories, exclusions, wishlists, manually arranging individual stems, and editable daily flower goal are unfinished (each completed routine, morning and evening, earns one stem; light-tracked habits are excluded). Surprise pool is curated local suggestions, not AI-generated or live shopping inventory. Budget caps reserve allowances in reveal month; review UX for cross-month claims. Reward milestones persist once earned; review explicit policy for historical corrections. Harden imported backup validation, including garden data, and recovery from corrupt localStorage before release. Deployed by GitHub Pages from main at https://yungprapz.github.io/habittracker/. Push is not configured. Physical iPhone testing is outstanding, including whether the calendar sheet opens from the Home Screen app and whether imported alerts fire.
