@@ -1,0 +1,6 @@
+export const localDate=(d=new Date())=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+export const shift=(s,n)=>{const d=new Date(s+'T12:00:00');d.setDate(d.getDate()+n);return localDate(d)};
+export function initial(today=localDate()){return {versions:[{date:today,habits:['Thyroid medicine','Vitamin C serum','Moisturizer','Sunscreen','Red light mask','Serum','Moisturizer','Retinol','Hair oiling','Vitamin D','Iron','Creatine'].map((name,i)=>({id:String(i),name,period:i<4?'morning':'night',group:i>8?'Supplements':'Care',days:i===7?[1,4]:[0,1,2,3,4,5,6]}))}],checks:{},times:{morning:'07:00',night:'22:00'}}}
+export function scheduled(state,date){const v=state.versions.filter(v=>v.date<=date).at(-1);return (v?.habits||[]).filter(h=>h.days.includes(new Date(date+'T12:00:00').getDay()))}
+export function streak(s,id,date=localDate()){let n=0,d=date;if(!s.checks[d]?.includes(id))d=shift(d,-1);while(s.checks[d]?.includes(id)){n++;d=shift(d,-1)}return n}
+export function revise(s,habits,today=localDate()){s.versions=s.versions.filter(v=>v.date!==today);s.versions.push({date:today,habits:structuredClone(habits)});s.versions.sort((a,b)=>a.date.localeCompare(b.date))}
