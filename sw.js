@@ -1,5 +1,5 @@
 importScripts('./reminders.js');
-const CACHE='bloom-v9';const FILES=['./','./index.html','./app.js','./model.js','./garden.js','./garden-ui.js','./reminders.js','./style.css','./manifest.webmanifest','./icon-192.png','./icon-512.png'];
+const CACHE='bloom-v10';const FILES=['./','./index.html','./app.js','./model.js','./garden.js','./garden-ui.js','./reminders.js','./style.css','./manifest.webmanifest','./icon-192.png','./icon-512.png'];
 // Activate a new version straight away so new routes, like calendar reminders, work on the next tap.
 self.addEventListener('install',e=>{self.skipWaiting();e.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES)))});
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('bloom-')&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
