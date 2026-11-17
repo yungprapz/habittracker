@@ -268,7 +268,8 @@ h1.greeting{font-size:clamp(28px,7vw,36px);margin:2px 0 14px}
 .edit-actions{display:flex;gap:8px;width:100%;flex-wrap:wrap}
 .add{margin-top:8px}
 .edits-note{margin:-6px 4px 18px;font-size:13px}
-.reminders>summary{padding:4px 2px;min-height:0;color:var(--forest-2)}
+.reminders .tag{display:inline-block;text-decoration:none;margin:4px 0 10px}
+.reminders details summary{padding:10px 2px 2px;min-height:0;font-size:14px}
 .days{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
 .days[hidden]{display:none}
 .days button{width:auto;min-width:0}
