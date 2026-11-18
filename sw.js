@@ -1,5 +1,5 @@
 importScripts('./reminders.js');
-const CACHE='bloom-v11';const FILES=['./','./index.html','./app.js','./model.js','./garden.js','./garden-ui.js','./reminders.js','./style.css','./manifest.webmanifest','./icon-192.png','./icon-512.png'];
+const CACHE='bloom-v12';const FILES=['./','./index.html','./app.js','./model.js','./garden.js','./garden-ui.js','./reminders.js','./style.css','./manifest.webmanifest','./icon-192.png','./icon-512.png'];
 const PATHS=new Set(FILES.map(f=>new URL(f,location).pathname));
 // Activate a new version straight away so new routes, like calendar reminders, work on the next tap.
 // cache:'reload' skips the browser's HTTP cache. GitHub Pages lets browsers reuse files for 10 minutes, which could
