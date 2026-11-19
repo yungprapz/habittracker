@@ -102,9 +102,6 @@ progress::-moz-progress-bar{background:var(--forest-2);border-radius:99px}
 .check input:focus-visible{outline:3px solid #a57b2c;outline-offset:2px}
 .check:has(:checked){background:var(--sage-tint)}
 .check:has(:checked) span{color:var(--ink-2)}
-.autopilot{border-top:1px dashed var(--line-2);margin-top:10px}
-.autopilot summary{font-size:14px}
-.autopilot .check{opacity:.85}
 
 /* Flower picker */
 .today-flowers{position:relative;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow);padding:26px 18px 18px;margin:8px 0 22px}
