@@ -24,7 +24,11 @@ const ROUTINE={morning:'Morning routine',night:'Evening routine'},SHORT={morning
 function ring(done,total){const p=total?done/total:0,c=2*Math.PI*34;return `<svg class="ring" viewBox="0 0 80 80" role="img" aria-label="${Math.round(p*100)} percent complete"><circle cx="40" cy="40" r="34" class="ring-track"/><circle cx="40" cy="40" r="34" class="ring-fill" stroke-dasharray="${c.toFixed(1)}" stroke-dashoffset="${(c*(1-p)).toFixed(1)}" transform="rotate(-90 40 40)"/><text x="40" y="46" text-anchor="middle">${Math.round(p*100)}%</text></svg>`}
 // A slim header so the checklist starts near the top of the screen.
 function hero(hs,done){const all=hs.length&&done===hs.length,label=date===today()?'Today':new Date(date+'T12:00:00').toLocaleDateString(undefined,{weekday:'long',month:'short',day:'numeric'});
-  return `<section class="hero slim">${ring(done,hs.length)}<div><span class="eyebrow">${label}</span><h2>${all?'All done. Well deserved.':`${done} of ${hs.length} habits`}</h2></div></section>`}
+  return `<section class="hero slim">${ring(done,hs.length)}<div><span class="eyebrow">${label}</span><h2>${all?'All done. Well deserved.':`${done} of ${hs.length} habits`}</h2>${date!==today()?`<button class="back-today" data-day="${today()}">← Back to today</button>`:''}</div></section>`}
+// Forgot to log last night? Offer yesterday, once, until it's complete or dismissed. Ticking happens on that day itself, so streaks and flowers count it.
+function catchup(){const y=shift(today(),-1),hs=active(state,y);if(date!==today()||y<state.versions[0].date||state.catchupDismissed===y||!hs.length||hs.every(h=>state.checks[y]?.includes(h.id)))return '';
+  const day=new Date(y+'T12:00:00').toLocaleDateString(undefined,{weekday:'long'});
+  return `<div class="catchup"><button class="catchup-go" data-day="${y}">Forgot to log yesterday? <b>Fill in ${day}</b></button><button class="catchup-x" data-catchup-dismiss="${y}" aria-label="Dismiss">×</button></div>`}
 function week(){const t=today();return `<div class="week" role="group" aria-label="Choose a day this week">${Array.from({length:7},(_,i)=>{const d=shift(t,i-6),dt=new Date(d+'T12:00:00'),hs=active(state,d),n=hs.filter(h=>state.checks[d]?.includes(h.id)).length;return `<button data-day="${d}" ${d<state.versions[0].date?'disabled':''} class="${n&&n===hs.length?'full':n?'partial':''}" aria-pressed="${d===date}" aria-label="${dt.toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'})}: ${n} of ${hs.length} complete"><small>${dt.toLocaleDateString(undefined,{weekday:'short'}).slice(0,3)}</small><b>${dt.getDate()}</b><i aria-hidden="true"></i></button>`}).join('')}</div>`}
 
 const RULE='Never miss twice: one rest day pauses your streak, two in a row resets it.';
@@ -53,7 +57,7 @@ function render(){upgrade(state);migrate(state);reconcile(state);document.queryS
   const hs=active(state,date),done=hs.filter(h=>state.checks[date]?.includes(h.id)).length;
   const order=['morning','night'].sort((a,b)=>tab==='today'?routineDone(a,hs)-routineDone(b,hs):0),cards=`<div class="cards">${order.map(p=>routineCard(p,hs)).join('')}</div>`;
   const head=tab==='today'?`<h1 class="greeting">${greeting()}.</h1>`:`<h1>${tab==='progress'?'Your progress.':'Your routines.'}</h1><p class="intro">${tab==='progress'?'Every checkmark is a moment you showed up.':'Your pace. Your routines. Your kind of care.'}</p>`;
-  $('#app').innerHTML=head+(tab==='routines'?routines():tab==='today'?`${hero(hs,done)}${week()}${cards}${hairGoal()}${scalpCard()}`:`${calendar()}${daySummary(hs,done,cards)}${scalpCompare()}`);
+  $('#app').innerHTML=head+(tab==='routines'?routines():tab==='today'?`${hero(hs,done)}${catchup()}${week()}${cards}${hairGoal()}${scalpCard()}`:`${calendar()}${daySummary(hs,done,cards)}${scalpCompare()}`);
   bind();hydratePhotos();if(focusKey)document.querySelector(`[data-check="${focusKey}"]`)?.focus({preventScroll:true})}
 
 // Weekly scalp photo: one per Monday–Sunday week, kept on this device (photos.js). The latest earlier photo sits beside the prompt as a guide for matching the angle.
@@ -95,6 +99,7 @@ function doneLabel(){const hs=active(state,date);return `${hs.filter(h=>state.ch
 function setLight(id,on){edit(h=>{const x=h.find(x=>x.id===id);if(x){if(on)x.light=true;else delete x.light}})}
 
 function bind(){
+  $('[data-catchup-dismiss]')?.addEventListener('click',e=>{state.catchupDismissed=e.currentTarget.dataset.catchupDismiss;save();render()});
   $('[data-scalp]')?.addEventListener('change',async e=>{const f=e.target.files?.[0];if(!f)return;notify('Saving photo…');try{const {week}=await savePhoto(f);forgetUrl(week);await loadPhotos();compare.b=week;render();notify('Scalp photo saved on this device.')}catch{notify('That photo couldn’t be saved. Please try again.')}});
   $('[data-compare-open]')?.addEventListener('click',()=>{tab='progress';render();$('#scalp-compare')?.scrollIntoView({block:'start'})});
   document.querySelectorAll('[data-compare]').forEach(e=>e.onchange=()=>{compare[e.dataset.compare]=e.value;render()});

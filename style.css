@@ -295,3 +295,11 @@ h1.greeting{font-size:clamp(28px,7vw,36px);margin:2px 0 14px}
 .compare figcaption{margin-top:6px}
 .compare select{width:100%}
 button.quiet{border:none;background:none;padding:10px 0;color:var(--ink-2);text-decoration:underline;font-size:14px}
+/* Catch-up for a day you forgot to log */
+.catchup{display:flex;align-items:center;gap:6px;margin:0 0 14px;padding:4px 4px 4px 14px;border-radius:var(--r);background:var(--butter-soft);border:1px solid #e4d29a}
+.catchup-go{flex:1;text-align:left;border:none;background:none;padding:8px 0;font-size:14px;color:var(--ink-2)}
+.catchup-go b{color:var(--ink);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.catchup-go:hover,.catchup-x:hover{background:none}
+.catchup-x{border:none;background:none;padding:0;width:44px;font-size:22px;color:var(--muted)}
+.back-today{border:none;background:none;padding:6px 0;min-height:36px;font-size:14px;font-weight:600;color:var(--forest-2);text-decoration:underline;text-underline-offset:3px}
+.back-today:hover{background:none}
