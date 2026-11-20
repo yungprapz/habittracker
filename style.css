@@ -102,9 +102,6 @@ progress::-moz-progress-bar{background:var(--forest-2);border-radius:99px}
 .check input:focus-visible{outline:3px solid #a57b2c;outline-offset:2px}
 .check:has(:checked){background:var(--sage-tint)}
 .check:has(:checked) span{color:var(--ink-2)}
-.autopilot{border-top:1px dashed var(--line-2);margin-top:10px}
-.autopilot summary{font-size:14px}
-.autopilot .check{opacity:.85}
 
 /* Flower picker */
 .today-flowers{position:relative;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow);padding:26px 18px 18px;margin:8px 0 22px}
@@ -278,3 +275,31 @@ h1.greeting{font-size:clamp(28px,7vw,36px);margin:2px 0 14px}
 .days{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
 .days[hidden]{display:none}
 .days button{width:auto;min-width:0}
+.day-end{margin:0 0 10px}
+/* Weekly scalp photo */
+.scalp-row{display:flex;gap:14px;align-items:center}
+.scalp-text h2{margin:0 0 2px}
+.scalp-text small{color:var(--ink-2)}
+.scalp-thumb{width:64px;height:64px;flex-shrink:0;border-radius:12px;object-fit:cover;background:var(--sage-tint);box-shadow:var(--shadow-sm)}
+.scalp-thumb.empty{display:grid;place-items:center;color:var(--forest-2)}
+.scalp-thumb.empty svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linejoin:round}
+.scalp-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px}
+.photo-btn{position:relative;display:inline-flex;align-items:center;min-height:44px;box-sizing:border-box;cursor:pointer}
+.photo-btn:not(.tag){padding:10px 18px;border-radius:999px;border:1px solid var(--line-2);background:var(--paper);font-size:15px}
+.photo-btn:focus-within{outline:2px solid var(--forest-2);outline-offset:2px}
+.file-input{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;clip:rect(0 0 0 0)}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:8px 0}
+.compare.one{grid-template-columns:minmax(0,260px)}
+.compare figure{margin:0;min-width:0}
+.compare img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:12px;background:var(--sage-tint)}
+.compare figcaption{margin-top:6px}
+.compare select{width:100%}
+button.quiet{border:none;background:none;padding:10px 0;color:var(--ink-2);text-decoration:underline;font-size:14px}
+/* Catch-up for a day you forgot to log */
+.catchup{display:flex;align-items:center;gap:6px;margin:0 0 14px;padding:4px 4px 4px 14px;border-radius:var(--r);background:var(--butter-soft);border:1px solid #e4d29a}
+.catchup-go{flex:1;text-align:left;border:none;background:none;padding:8px 0;font-size:14px;color:var(--ink-2)}
+.catchup-go b{color:var(--ink);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.catchup-go:hover,.catchup-x:hover{background:none}
+.catchup-x{border:none;background:none;padding:0;width:44px;font-size:22px;color:var(--muted)}
+.back-today{border:none;background:none;padding:6px 0;min-height:36px;font-size:14px;font-weight:600;color:var(--forest-2);text-decoration:underline;text-underline-offset:3px}
+.back-today:hover{background:none}
