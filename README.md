@@ -22,6 +22,9 @@ Complete the scheduled morning routine to collect a Cosmos, Anemone or Daisy, an
 
 Hair-oiling milestones at 21, 42 and 66 streak days ("fully bloomed") unlock a reward once each. Reveals use a local curated surprise pool, not an AI service or live shopping search. Scratch with a pointer or use the accessible Reveal reward button. Treats are free. Claimed rewards remain recorded. No purchases or notifications are sent.
 
+## Weekly scalp photo
+Today has a weekly scalp photo card under the hair-oiling line: take one photo each Monday–Sunday week (retaking replaces it). Your most recent earlier photo sits beside the button so you can match the spot, light and parting. Progress shows two photos side by side, the first and latest by default, with how many weeks apart they are; pick any two weeks to compare, or delete one. Photos are shrunk to at most 1600 px and stored in IndexedDB (`photos.js`), on this device only. They aren't in JSON backups, and the demo uses its own photo store. Photos don't affect flowers or streaks.
+
 ## Why it works this way
 - **Never miss twice.** A single missed day doesn't measurably slow habit formation (Lally et al. 2010), but a broken streak demotivates more than the lapse warrants (Silverman & Barasch 2023).
 - **Welcome-back rare bloom.** In Milkman et al.'s 2021 megastudy, a small bonus for returning after a missed workout was the best of 54 interventions.
